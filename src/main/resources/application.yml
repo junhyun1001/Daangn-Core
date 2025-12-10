@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Daangn-Core
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: dev.jun.daangncore.domain
+  configuration:
+    use-actual-param-name: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true

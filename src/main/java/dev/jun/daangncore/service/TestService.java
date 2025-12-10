@@ -1,7 +1,7 @@
 package dev.jun.daangncore.service;
 
 import dev.jun.daangncore.domain.Test;
-import dev.jun.daangncore.mapper.TestMapper;
+import dev.jun.daangncore.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestService {
 
-    private final TestMapper testMapper;
+    private final TestRepository testRepository;
 
     public List<Test> findAll() {
-        return testMapper.findAll();
+        return testRepository.findAll();
     }
 }

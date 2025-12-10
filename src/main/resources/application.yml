@@ -4,10 +4,31 @@ spring:
   profiles:
     active: dev
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: dev.jun.daangncore.domain
-  configuration:
-    use-actual-param-name: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true
+  datasource:
+    url: jdbc:h2:mem:karrot;MODE=Oracle
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace

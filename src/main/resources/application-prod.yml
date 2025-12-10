@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${db_url}
+    username: ${db_username}
+    password: ${db_password}
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle19cDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100

@@ -1,6 +1,6 @@
 package dev.jun.daangncore.repository;
 
-import dev.jun.daangncore.domain.Test;
+import dev.jun.daangncore.entity.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

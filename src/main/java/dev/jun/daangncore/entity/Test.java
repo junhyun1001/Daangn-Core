@@ -1,8 +1,7 @@
-package dev.jun.daangncore.domain;
+package dev.jun.daangncore.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 

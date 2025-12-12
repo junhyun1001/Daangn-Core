@@ -3,6 +3,3 @@ spring:
     name: Daangn-Core
   profiles:
     active: dev
-
-app:
-  api-prefix: /api/v1

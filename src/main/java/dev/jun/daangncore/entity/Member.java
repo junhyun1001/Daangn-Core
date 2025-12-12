@@ -42,4 +42,13 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member")
     private List<Favorite> favorites = new ArrayList<>();
+
+    @Builder
+    public Member(String email, String password, String nickname, String profileImageUrl) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.score = 36.5;
+        this.reviewCount = 0;
+    }
 }

@@ -38,3 +38,6 @@ out/
 
 ### application-dev.yml ###
 *-dev.*
+
+### .sql ###
+data.sql

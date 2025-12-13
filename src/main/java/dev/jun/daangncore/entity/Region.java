@@ -15,7 +15,7 @@ public class Region {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
+    private Long id;
 
     @Column(nullable = false, length = 10)
     private String sido; // 시도

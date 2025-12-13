@@ -13,8 +13,17 @@ public class Region {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long code;
 
-    @Column(nullable = false, length = 50)
-    private String name;
+    @Column(nullable = false, length = 7)
+    private String sido;
+
+    @Column(length = 8)
+    private String sigungu;
+
+    @Column(length = 7)
+    private String eupmyeondong;
+
+    @Column(length = 8)
+    private String ri;
 }

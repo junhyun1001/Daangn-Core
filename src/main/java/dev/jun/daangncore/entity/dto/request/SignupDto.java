@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupForm {
+public class SignupDto {
 
     @NotBlank
     @Email

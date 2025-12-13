@@ -1,6 +1,6 @@
 package dev.jun.daangncore.controller;
 
-import dev.jun.daangncore.entity.dto.request.SignupForm;
+import dev.jun.daangncore.entity.dto.request.SignupDto;
 import dev.jun.daangncore.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ public class MemberController {
 
     @GetMapping
     public String signup(Model model) {
-        model.addAttribute("signupForm", new SignupForm());
+        model.addAttribute("signupDto", new SignupDto());
         return "member/signup.html";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute SignupForm signupForm, BindingResult result) {
+    public String signup(@Valid @ModelAttribute SignupDto signupDto, BindingResult result) {
 
-        memberService.saveMember(signupForm);
+        memberService.saveMember(signupDto);
 
         if (result.hasErrors()) {
             return "member/signup.html";

@@ -1,7 +1,7 @@
 package dev.jun.daangncore.service;
 
 import dev.jun.daangncore.entity.Member;
-import dev.jun.daangncore.entity.dto.request.SignupForm;
+import dev.jun.daangncore.entity.dto.request.SignupDto;
 import dev.jun.daangncore.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,14 +16,14 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void saveMember(SignupForm signupForm) {
+    public void saveMember(SignupDto signupDto) {
 
-        String encodedPassword = passwordEncoder.encode(signupForm.getPassword());
+        String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
 
         Member member = Member.builder()
-                .email(signupForm.getEmail())
+                .email(signupDto.getEmail())
                 .password(encodedPassword)
-                .nickname(signupForm.getNickname())
+                .nickname(signupDto.getNickname())
                 .build();
 
         memberRepository.save(member);

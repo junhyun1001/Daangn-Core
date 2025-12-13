@@ -38,5 +38,5 @@ public class Region {
 
     // 경도: 전체 11자리, 소수점 7자리
     @Column(precision = 11, scale = 7)
-    private BigDecimal longtitude;
+    private BigDecimal longitude;
 }

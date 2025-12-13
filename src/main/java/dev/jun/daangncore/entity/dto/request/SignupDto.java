@@ -23,5 +23,5 @@ public class SignupDto {
     @Size(min = 2, max = 8)
     private String nickname;
 
-
+    private Long regionId;
 }

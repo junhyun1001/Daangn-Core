@@ -2,54 +2,317 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당근 - 회원가입</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 에러가 났을 때 적용할 스타일 */
+        :root {
+            --primary-color: #ff6f0f; /* 당근마켓 오렌지 */
+            --primary-hover: #e65f0a;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --border-color: #ced4da;
+            --error-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .signup-container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        /* 폼 그룹 스타일 */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative; /* 에러 메시지 등을 위해 */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        /* 입력 필드 공통 스타일 */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 111, 15, 0.1);
+        }
+
+        /* 에러 스타일 */
         .field-error {
-            border-color: #dc3545; /* 테두리 빨간색 */
-            color: #dc3545; /* 글자 빨간색 */
+            border-color: var(--error-color) !important;
         }
 
         .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
+            color: var(--error-color);
+            font-size: 13px;
+            margin-top: 6px;
+            padding-left: 2px;
         }
 
-        input {
-            display: block; /* 줄바꿈을 위해 */
-            margin-bottom: 5px;
-            padding: 8px;
-            width: 200px;
+        /* 동네 찾기 섹션 스타일 */
+        .location-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .location-group input {
+            flex: 1;
+            background-color: #f1f3f5;
+            cursor: default;
+        }
+
+        .btn-location {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-location:hover {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+        }
+
+        /* 추천 지역 목록 (드롭다운 스타일) */
+        #regionList {
+            position: absolute; /* 폼 그룹 내에서 띄움 */
+            width: 100%;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 8px;
+            padding: 0;
+            list-style: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        #regionList li {
+            padding: 12px 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f3f5;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #regionList li:last-child {
+            border-bottom: none;
+        }
+
+        #regionList li:hover {
+            background-color: #f8f9fa; /* 마우스 오버 시 색상 */
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* 가입하기 버튼 */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* 스크롤바 커스텀 */
+        #regionList::-webkit-scrollbar {
+            width: 6px;
+        }
+        #regionList::-webkit-scrollbar-thumb {
+            background-color: #dee2e6;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
 
-<h3>회원가입</h3>
+<div class="signup-container">
+    <h3>회원가입</h3>
 
-<form th:action="@{/members/signup}" method="post" th:object="${signupDto}">
+    <form th:action="@{/members/signup}" method="post" th:object="${signupDto}">
 
-    <div>
-        <input type="email" th:field="*{email}" placeholder="이메일"
-               th:errorclass="field-error">
-        <div class="error-message" th:errors="*{email}">이메일 오류 메시지</div>
-    </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" th:field="*{email}" placeholder="이메일 주소 입력"
+                   th:errorclass="field-error">
+            <div class="error-message" th:errors="*{email}"></div>
+        </div>
 
-    <div>
-        <input type="password" th:field="*{password}" placeholder="비밀번호"
-               th:errorclass="field-error">
-        <div class="error-message" th:errors="*{password}">비밀번호 오류 메시지</div>
-    </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="비밀번호 입력"
+                   th:errorclass="field-error">
+            <div class="error-message" th:errors="*{password}"></div>
+        </div>
 
-    <div>
-        <input type="text" th:field="*{nickname}" placeholder="닉네임"
-               th:errorclass="field-error">
-        <div class="error-message" th:errors="*{nickname}">닉네임 오류 메시지</div>
-    </div>
+        <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}" placeholder="닉네임 입력"
+                   th:errorclass="field-error">
+            <div class="error-message" th:errors="*{nickname}"></div>
+        </div>
 
-    <button type="submit">가입하기</button>
-</form>
+        <div class="form-group">
+            <label>사는 동네</label>
+            <div class="location-group">
+                <input type="hidden" id="selectedRegionId" name="regionId">
+                <input type="text" id="selectedRegionName" placeholder="오른쪽 버튼을 눌러주세요" readonly>
+                <button type="button" class="btn-location" id="btnFindLocation" onclick="findMyLocation()">📍 위치 찾기</button>
+            </div>
+
+            <ul id="regionList" style="display:none;"></ul>
+        </div>
+
+        <button type="submit" class="btn-submit">가입하기</button>
+    </form>
+</div>
+
+<script>
+    function findMyLocation() {
+        const btn = document.getElementById("btnFindLocation");
+
+        if (!navigator.geolocation) {
+            alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+            return;
+        }
+
+        // 로딩 상태 표시
+        const originalText = btn.innerText;
+        btn.innerText = "탐색 중...";
+        btn.disabled = true;
+
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // 서버로 요청
+            fetch(`/regions/nearest?lat=${lat}&lon=${lon}`) // url 확인 필요 (/api 추가됨)
+                .then(response => response.json())
+                .then(data => {
+                    const listElement = document.getElementById("regionList");
+                    listElement.innerHTML = "";
+                    listElement.style.display = "block";
+
+                    if (data.length === 0) {
+                        listElement.innerHTML = "<li style='cursor:default; color:#868e96;'>근처 지역을 찾을 수 없습니다.</li>";
+                        return;
+                    }
+
+                    data.forEach(region => {
+                        const li = document.createElement("li");
+                        li.textContent = region.fullRegionName;
+
+                        li.onclick = () => {
+                            document.getElementById("selectedRegionId").value = region.id;
+                            document.getElementById("selectedRegionName").value = region.fullRegionName;
+                            listElement.style.display = "none";
+                        };
+                        listElement.appendChild(li);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("지역 정보를 불러오는데 실패했습니다.");
+                })
+                .finally(() => {
+                    // 버튼 원복
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+
+        }, (error) => {
+            btn.innerText = originalText;
+            btn.disabled = false;
+
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("위치 권한이 차단되었습니다. 브라우저 설정에서 허용해주세요.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("위치 신호를 잡을 수 없습니다. (Wi-Fi를 켜보세요)");
+                    break;
+                case error.TIMEOUT:
+                    alert("위치 탐색 시간이 초과되었습니다. 다시 시도해주세요.");
+                    break;
+                default:
+                    alert("오류 발생: " + error.message);
+                    break;
+            }
+        }, options);
+    }
+
+    // 화면 아무 곳이나 클릭하면 드롭다운 닫기 (UX 개선)
+    document.addEventListener('click', function(event) {
+        const regionList = document.getElementById('regionList');
+        const locationGroup = document.querySelector('.location-group');
+        if (!regionList.contains(event.target) && !locationGroup.contains(event.target)) {
+            regionList.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>

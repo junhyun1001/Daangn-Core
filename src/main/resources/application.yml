@@ -1,4 +1,7 @@
 spring:
+  messages:
+    basename: errors
+    encoding: UTF-8
   application:
     name: Daangn-Core
   profiles:

@@ -15,7 +15,7 @@ public class Region {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
+    private Long id;
 
     @Column(nullable = false, length = 10)
     private String sido; // 시도
@@ -38,5 +38,5 @@ public class Region {
 
     // 경도: 전체 11자리, 소수점 7자리
     @Column(precision = 11, scale = 7)
-    private BigDecimal longtitude;
+    private BigDecimal longitude;
 }

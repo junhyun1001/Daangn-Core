@@ -19,7 +19,7 @@ public class MemberService {
     private final RegionRepository regionRepository;
 
     @Transactional
-    public void saveMember(SignupDto signupDto) {
+    public Member saveMember(SignupDto signupDto) {
 
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
 
@@ -32,6 +32,6 @@ public class MemberService {
                 .region(region)
                 .build();
 
-        memberRepository.save(member);
+        return memberRepository.save(member);
     }
 }

@@ -14,14 +14,23 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(16);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/members/**", "/regions/nearest").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/members/login")
+                        .loginProcessingUrl("/members/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
                 );
 
         return http.build();

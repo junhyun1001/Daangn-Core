@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당근 - 로그인</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6f0f; /* 당근마켓 오렌지 */
+            --primary-hover: #e65f0a;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --border-color: #ced4da;
+            --error-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        /* 폼 그룹 스타일 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        /* 입력 필드 공통 스타일 */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 111, 15, 0.1);
+        }
+
+        /* 로그인 버튼 */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* 에러 및 알림 메시지 */
+        .alert-message {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .alert-error {
+            color: var(--error-color);
+            background-color: #fff5f5;
+            border: 1px solid #ffc9c9;
+        }
+
+        .alert-logout {
+            color: #0c8599;
+            background-color: #e3fafc;
+            border: 1px solid #99e9f2;
+        }
+
+        /* 하단 링크 (회원가입 이동) */
+        .bottom-links {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: #868e96;
+        }
+
+        .bottom-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+        .bottom-links a:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h3>로그인</h3>
+
+    <div th:if="${param.error}" class="alert-message alert-error">
+        이메일 또는 비밀번호가 일치하지 않습니다.
+    </div>
+
+    <div th:if="${param.logout}" class="alert-message alert-logout">
+        성공적으로 로그아웃 되었습니다.
+    </div>
+
+    <form th:action="@{/members/login}" method="post">
+
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" placeholder="이메일 입력" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="비밀번호 입력" required>
+        </div>
+
+        <button type="submit" class="btn-submit">로그인</button>
+    </form>
+
+    <div class="bottom-links">
+        아직 계정이 없으신가요?
+        <a th:href="@{/members/signup}">회원가입</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -19,7 +19,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping
+    @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("signupDto", new SignupDto());
         return "member/signup.html";
@@ -37,4 +37,8 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "member/login.html";
+    }
 }

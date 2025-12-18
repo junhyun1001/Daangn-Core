@@ -5,6 +5,7 @@ import dev.jun.daangncore.entity.Region;
 import dev.jun.daangncore.entity.dto.request.SignupDto;
 import dev.jun.daangncore.repository.MemberRepository;
 import dev.jun.daangncore.repository.RegionRepository;
+import dev.jun.daangncore.service.MemberService;
 import dev.jun.daangncore.service.RegionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class MemberServiceTest {
     @Autowired
     private RegionService regionService;
     @Autowired
-    private dev.jun.daangncore.service.MemberService memberService;
+    private MemberService memberService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
